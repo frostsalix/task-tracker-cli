@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mvn dependency:resolve)",
+      "Bash(where mvn:*)",
+      "Bash(where mvnw:*)",
+      "Bash(java -version)",
+      "Read(//c/Users/Wen/.m2/**)",
+      "Bash(dir \"D:\\\\Project\\\\Learn\\\\task-tracker\\\\.idea\")",
+      "Bash(export JAVA_HOME=\"/c/Program Files/Amazon Corretto/jdk25.0.2_10\")",
+      "Bash(\"/c/Users/Wen/AppData/Roaming/JetBrains/IntelliJIdea2026.1/plugins/maven/lib/maven3/bin/mvn\" -f \"D:\\\\Project\\\\Learn\\\\task-tracker\\\\pom.xml\" compile)",
+      "Bash(\"/c/Users/Wen/AppData/Roaming/JetBrains/IntelliJIdea2026.1/plugins/maven/lib/maven3/bin/mvn\" -f \"D:\\\\Project\\\\Learn\\\\task-tracker\\\\pom.xml\" exec:java -Dexec.mainClass=\"com.tasktracker.Main\" -Dexec.args=\"add '测试任务'\")",
+      "Bash(\"/c/Users/Wen/AppData/Roaming/JetBrains/IntelliJIdea2026.1/plugins/maven/lib/maven3/bin/mvn\" -f \"D:\\\\Project\\\\Learn\\\\task-tracker\\\\pom.xml\" -q exec:java -Dexec.mainClass=\"com.tasktracker.Main\" -Dexec.args=\"list\")",
+      "Bash(\"/c/Users/Wen/AppData/Roaming/JetBrains/IntelliJIdea2026.1/plugins/maven/lib/maven3/bin/mvn\" -f \"D:\\\\Project\\\\Learn\\\\task-tracker\\\\pom.xml\" -q compile)"
+    ]
+  }
+}
