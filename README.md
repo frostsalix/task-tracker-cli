@@ -2,7 +2,7 @@
 
 A Java-based CLI task tracker. Data is stored in `tasks.json` at the repository root.
 
-Also the sample solution for the task-tracker challenge from roadmap.sh.
+Also the sample solution for the [task-tracker](https://roadmap.sh/projects/task-tracker) challenge from [roadmap.sh](https://roadmap.sh/dashboard).
 
 ## Requirements
 
