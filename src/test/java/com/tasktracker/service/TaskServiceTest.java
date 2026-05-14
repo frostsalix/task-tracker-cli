@@ -88,4 +88,22 @@ class TaskServiceTest {
 
         assertFalse(updated);
     }
+
+    @Test
+    void filtersTasksByDoneStatus() throws Exception {
+        Path tempFile = Files.createTempFile("tasks", ".json");
+        TaskStorage storage = new TaskStorage(tempFile.toString());
+        TaskService service = new TaskService(storage);
+
+        storage.saveTasks(List.of(
+                new Task(1, "a", "todo", "2026-01-01T10:00:00", "2026-01-01T10:00:00"),
+                new Task(2, "b", "done", "2026-01-01T10:00:00", "2026-01-01T10:00:00"),
+                new Task(3, "c", "in-progress", "2026-01-01T10:00:00", "2026-01-01T10:00:00")
+        ));
+
+        List<Task> filtered = service.getTasksByStatus("done");
+
+        assertEquals(1, filtered.size());
+        assertEquals(2, filtered.get(0).getId());
+    }
 }

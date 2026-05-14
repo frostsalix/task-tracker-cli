@@ -28,7 +28,23 @@ public class Main {
                 break;
 
             case "list":
-                service.listTasks();
+                if (args.length == 1) {
+                    service.listTasks();
+                    break;
+                }
+
+                if (args.length > 2) {
+                    System.out.println("Too many arguments for list.");
+                    return;
+                }
+
+                String status = args[1];
+                if (!isValidStatus(status)) {
+                    System.out.println("Invalid status. Use: todo, in-progress, done.");
+                    return;
+                }
+
+                service.listTasks(status);
                 break;
 
             case "update":
@@ -99,5 +115,11 @@ public class Main {
             System.out.println("Invalid task id.");
             return null;
         }
+    }
+
+    private static boolean isValidStatus(String status) {
+        return "todo".equals(status)
+                || "in-progress".equals(status)
+                || "done".equals(status);
     }
 }

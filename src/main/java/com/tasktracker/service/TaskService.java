@@ -5,6 +5,7 @@ import com.tasktracker.storage.TaskStorage;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class TaskService {
 
@@ -51,6 +52,21 @@ public class TaskService {
         for (Task task : tasks) {
             System.out.println(task);
         }
+    }
+
+    public void listTasks(String status) {
+        List<Task> tasks = getTasksByStatus(status);
+
+        for (Task task : tasks) {
+            System.out.println(task);
+        }
+    }
+
+    public List<Task> getTasksByStatus(String status) {
+        return storage.loadTasks()
+                .stream()
+                .filter(task -> status.equals(task.getStatus()))
+                .collect(Collectors.toList());
     }
 
     public boolean updateTask(int id, String description) {
