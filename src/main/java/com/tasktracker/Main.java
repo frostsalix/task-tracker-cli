@@ -5,9 +5,10 @@ import com.tasktracker.service.TaskService;
 public class Main {
 
     public static void main(String[] args) {
+        run(args, new TaskService());
+    }
 
-        TaskService service = new TaskService();
-
+    static void run(String[] args, TaskService service) {
         if (args.length == 0) {
             System.out.println("No command provided.");
             return;
@@ -19,8 +20,13 @@ public class Main {
 
             case "add":
 
-                if (args.length < 2) {
+                if (args.length < 2 || isBlank(args[1])) {
                     System.out.println("Description required.");
+                    return;
+                }
+
+                if (args.length > 2) {
+                    System.out.println("Too many arguments for add.");
                     return;
                 }
 
@@ -53,8 +59,18 @@ public class Main {
                     return;
                 }
 
+                if (args.length > 3) {
+                    System.out.println("Too many arguments for update.");
+                    return;
+                }
+
                 Integer updateId = parseTaskId(args[1]);
                 if (updateId == null) {
+                    return;
+                }
+
+                if (isBlank(args[2])) {
+                    System.out.println("Description required.");
                     return;
                 }
 
@@ -64,6 +80,11 @@ public class Main {
             case "delete":
                 if (args.length < 2) {
                     System.out.println("Task id required.");
+                    return;
+                }
+
+                if (args.length > 2) {
+                    System.out.println("Too many arguments for delete.");
                     return;
                 }
 
@@ -81,6 +102,11 @@ public class Main {
                     return;
                 }
 
+                if (args.length > 2) {
+                    System.out.println("Too many arguments for mark-in-progress.");
+                    return;
+                }
+
                 Integer inProgressId = parseTaskId(args[1]);
                 if (inProgressId == null) {
                     return;
@@ -92,6 +118,12 @@ public class Main {
             case "mark-done":
                 if (args.length < 2) {
                     System.out.println("Task id required.");
+                    return;
+                }
+
+                
+                if (args.length > 2) {
+                    System.out.println("Too many arguments for mark-done.");
                     return;
                 }
 
@@ -110,7 +142,12 @@ public class Main {
 
     private static Integer parseTaskId(String rawId) {
         try {
-            return Integer.parseInt(rawId);
+            int taskId = Integer.parseInt(rawId);
+            if (taskId <= 0) {
+                System.out.println("Invalid task id.");
+                return null;
+            }
+            return taskId;
         } catch (NumberFormatException e) {
             System.out.println("Invalid task id.");
             return null;
@@ -121,5 +158,9 @@ public class Main {
         return "todo".equals(status)
                 || "in-progress".equals(status)
                 || "done".equals(status);
+    }
+
+    private static boolean isBlank(String value) {
+        return value == null || value.trim().isEmpty();
     }
 }
