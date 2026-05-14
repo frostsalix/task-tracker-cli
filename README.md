@@ -1,56 +1,46 @@
 # task-tracker-cli
 
-一个基于 Java 的命令行任务追踪工具，数据保存在项目根目录 `tasks.json`。
+A Java-based CLI task tracker. Data is stored in `tasks.json` at the repository root.
 
-## 环境要求
+## Requirements
 
-- JDK（按 `pom.xml` 配置）
+- JDK (as required by `pom.xml`)
 - Windows / macOS / Linux
 
-## 构建与测试
+## Build and Test
 
-使用 Maven Wrapper（仓库根目录）：
+Use Maven Wrapper from the repository root:
 
-- 编译（Windows）：`.\mvnw.cmd -q compile`
-- 编译（macOS/Linux）：`./mvnw -q compile`
-- 全量测试（Windows）：`.\mvnw.cmd -q test`
-- 全量测试（macOS/Linux）：`./mvnw -q test`
-- 单测类（Windows）：`.\mvnw.cmd -Dtest=TaskServiceTest test`
-- 单测方法（Windows）：`.\mvnw.cmd -Dtest=TaskServiceTest#updatesTaskDescriptionAndUpdatedAt test`
+- Compile (Windows): `.\mvnw.cmd -q compile`
+- Compile (macOS/Linux): `./mvnw -q compile`
+- Run all tests (Windows): `.\mvnw.cmd -q test`
+- Run all tests (macOS/Linux): `./mvnw -q test`
+- Run one test class (Windows): `.\mvnw.cmd -Dtest=TaskServiceTest test`
+- Run one test method (Windows): `.\mvnw.cmd -Dtest=TaskServiceTest#updatesTaskDescriptionAndUpdatedAt test`
 
-## 运行方式
+## Run
 
-### Windows（推荐）
+### Windows
 
-1. 首次初始化（编译 + PATH 配置）：
-
-```powershell
-.\install.bat
-```
-
-2. 若当前终端里 `tt` 仍不可用，刷新 PATH 或重开终端：
+Run directly:
 
 ```powershell
-$env:Path = [Environment]::GetEnvironmentVariable('Path','Machine') + ';' + [Environment]::GetEnvironmentVariable('Path','User')
+.\tt.bat add "Buy groceries"
+.\tt.bat list
 ```
 
-3. 直接运行：
-
-```powershell
-tt add "Buy groceries"
-```
-
-> 在 PowerShell 中也可以使用 `.\tt.bat ...` 直接运行当前目录脚本。
+If you want to use `tt` globally, add the repository directory to your user PATH.
 
 ### macOS / Linux
 
+Run with Maven:
+
 ```bash
-./install.sh
+./mvnw -q compile
+./mvnw -q exec:java -Dexec.mainClass="com.tasktracker.Main" -Dexec.args='add "Buy groceries"'
 ```
 
-随后可使用 `tt ...` 执行命令（或按脚本提示 `source` 对应 shell 配置文件）。
-
-## 支持命令
+## Supported Commands
 
 ```bash
 tt add "Buy groceries"
@@ -64,22 +54,21 @@ tt list todo
 tt list in-progress
 ```
 
-## 参数与边界行为
+## Validation and Edge Cases
 
-- 缺少命令：输出 `No command provided.`
-- 未知命令：输出 `Unknown command.`
-- `id` 非数字或小于等于 0：输出 `Invalid task id.`
-- `add` / `update` 描述为空白：输出 `Description required.`
-- `list` 仅支持状态：`todo`、`in-progress`、`done`
-- 传入多余参数会报错（例如 `Too many arguments for ...`）
+- Missing command: `No command provided.`
+- Unknown command: `Unknown command.`
+- Non-numeric or non-positive `id`: `Invalid task id.`
+- Blank description for `add` / `update`: `Description required.`
+- `list` supports only: `todo`, `in-progress`, `done`
+- Extra arguments are rejected (for example: `Too many arguments for ...`)
 
-## 数据模型
+## Data Model
 
-每个任务包含：
+Each task includes:
 
 - `id`
 - `description`
-- `status`（`todo` / `in-progress` / `done`）
+- `status` (`todo` / `in-progress` / `done`)
 - `createdAt`
 - `updatedAt`
-
