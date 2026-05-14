@@ -2,6 +2,8 @@
 
 A Java-based CLI task tracker. Data is stored in `tasks.json` at the repository root.
 
+Also the sample solution for the task-tracker challenge from roadmap.sh.
+
 ## Requirements
 
 - JDK (as required by `pom.xml`)
